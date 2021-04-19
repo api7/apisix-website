@@ -1,4 +1,4 @@
-const projects = ["apisix-ingress-controller", "apisix", "apisix-dashboard", "apisix-docker", "apisix-helm-chart"];
+const projects = ["apisix"];
 const languages = ["en", "zh", "es"];
 
 module.exports = {

@@ -1,5 +1,6 @@
 {
-  "docs": [
+  "version": 2.5,
+  "sidebar": [
     {
       "type": "category",
       "label": "Architecture Design",
