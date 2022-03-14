@@ -1,5 +1,5 @@
 ---
-title: referer-restriction
+title: ua-restriction
 ---
 
 <!--
@@ -31,24 +31,24 @@ title: referer-restriction
 
 ## Name
 
-The `referer-restriction` can restrict access to a Service or a Route by
-whitelisting/blacklisting request header Referrers.
+The `ua-restriction` can restrict access to a Service or a Route by `allowlist` and `denylist` `User-Agent` header.
 
 ## Attributes
 
 | Name      | Type          | Requirement | Default | Valid | Description                              |
 | --------- | ------------- | ----------- | ------- | ----- | ---------------------------------------- |
-| whitelist | array[string] | optional    |         |       | List of hostname to whitelist. The hostname can be started with `*` as a wildcard |
-| blacklist | array[string] | optional    |         |       | List of hostname to blacklist. The hostname can be started with `*` as a wildcard |
-| message | string | optional    | Your referer host is not allowed | [1, 1024] | Message returned in case access is not allowed. |
-| bypass_missing  | boolean       | optional    | false   |       | Whether to bypass the check when the Referer header is missing or malformed |
+| bypass_missing  | boolean       | optional    | false   |       | Whether to bypass the check when the User-Agent header is missing |
+| allowlist | array[string] | optional    |         |       | A list of allowed User-Agent headers. |
+| denylist | array[string] | optional    |         |       | A list of denied User-Agent headers. |
+| message | string | optional             | Not allowed. | length range: [1, 1024] | Message of deny reason. |
 
-One of `whitelist` or `blacklist` must be specified, and they can not work together.
+Any of `allowlist` or `denylist` can be optional, and can work together in this order: allowlist->denylist
+
 The message can be user-defined.
 
 ## How To Enable
 
-Creates a route or service object, and enable plugin `referer-restriction`.
+Creates a route or service object, and enable plugin `ua-restriction`.
 
 ```shell
 curl http://127.0.0.1:9080/apisix/admin/routes/1 -H 'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1' -X PUT -d '
@@ -61,47 +61,55 @@ curl http://127.0.0.1:9080/apisix/admin/routes/1 -H 'X-API-KEY: edd1c9f034335f13
         }
     },
     "plugins": {
-        "referer-restriction": {
-            "bypass_missing": true,
-            "whitelist": [
-                "xx.com",
-                "*.xx.com"
-            ]
+        "ua-restriction": {
+             "bypass_missing": true,
+             "allowlist": [
+                 "my-bot1",
+                 "(Baiduspider)/(\\d+)\\.(\\d+)"
+             ],
+             "denylist": [
+                 "my-bot2",
+                 "(Twitterspider)/(\\d+)\\.(\\d+)"
+             ]
         }
     }
 }'
 ```
 
+Default returns `{"message":"Not allowed"}` when rejected. If you want to use a custom message, you can configure it in the plugin section.
+
+```json
+"plugins": {
+    "ua-restriction": {
+        "denylist": [
+            "my-bot2",
+            "(Twitterspider)/(\\d+)\\.(\\d+)"
+        ],
+        "message": "Do you want to do something bad?"
+    }
+}
+```
+
 ## Test Plugin
 
-Request with `Referer: http://xx.com/x`:
+Requests from normal User-Agent:
 
 ```shell
-$ curl http://127.0.0.1:9080/index.html -H 'Referer: http://xx.com/x'
+$ curl http://127.0.0.1:9080/index.html -i
 HTTP/1.1 200 OK
 ...
 ```
 
-Request with `Referer: http://yy.com/x`:
+Requests with the bot User-Agent:
 
 ```shell
-$ curl http://127.0.0.1:9080/index.html -H 'Referer: http://yy.com/x'
+$ curl http://127.0.0.1:9080/index.html --header 'User-Agent: Twitterspider/2.0'
 HTTP/1.1 403 Forbidden
-...
-{"message":"Your referer host is not allowed"}
-```
-
-Request without `Referer`:
-
-```shell
-$ curl http://127.0.0.1:9080/index.html
-HTTP/1.1 200 OK
-...
 ```
 
 ## Disable Plugin
 
-When you want to disable the `referer-restriction` plugin, it is very simple,
+When you want to disable the `ua-restriction` plugin, it is very simple,
 you can delete the corresponding json configuration in the plugin configuration,
 no need to restart the service, it will take effect immediately:
 
@@ -119,4 +127,4 @@ $ curl http://127.0.0.1:9080/apisix/admin/routes/1 -H 'X-API-KEY: edd1c9f034335f
 }'
 ```
 
-The `referer-restriction` plugin has been disabled now. It works for other plugins.
+The `ua-restriction` plugin has been disabled now. It works for other plugins.

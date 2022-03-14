@@ -23,7 +23,7 @@ title: Service
 
 A `Service` is an abstraction of an API (which can also be understood as a set of Route abstractions). It usually corresponds to the upstream service abstraction. Between `Route` and `Service`, usually the relationship of N:1, please see the following image.
 
-![service-example](../../../static/assets/images/service-example.png)
+![service-example](https://raw.githubusercontent.com/apache/apisix/master/docs/assets/images/service-example.png)
 
 Different Route rules are bound to a Service at the same time. These Routes will have the same upstream and plugin configuration, reducing redundant configuration.
 

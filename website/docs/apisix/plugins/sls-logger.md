@@ -99,7 +99,7 @@ hello, world
 
 * check log in ali cloud log service
 
-![](../../../static/assets/images/plugin/sls-logger-1.png "sls logger view")
+![](https://raw.githubusercontent.com/apache/apisix/master/docs/assets/images/plugin/sls-logger-1.png "sls logger view")
 
 ## Disable Plugin
 

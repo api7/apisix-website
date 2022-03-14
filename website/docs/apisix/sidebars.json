@@ -37,7 +37,11 @@
             "plugins/serverless",
             "plugins/redirect",
             "plugins/echo",
-            "plugins/server-info"
+            "plugins/gzip",
+            "plugins/real-ip",
+            "plugins/server-info",
+            "plugins/ext-plugin-pre-req",
+            "plugins/ext-plugin-post-req"
           ]
         },
         {
@@ -60,7 +64,8 @@
             "plugins/authz-keycloak",
             "plugins/wolf-rbac",
             "plugins/openid-connect",
-            "plugins/hmac-auth"
+            "plugins/hmac-auth",
+            "plugins/authz-casbin"
           ]
         },
         {
@@ -70,6 +75,7 @@
             "plugins/cors",
             "plugins/uri-blocker",
             "plugins/ip-restriction",
+            "plugins/ua-restriction",
             "plugins/referer-restriction",
             "plugins/consumer-restriction"
           ]
@@ -86,7 +92,8 @@
             "plugins/proxy-mirror",
             "plugins/api-breaker",
             "plugins/traffic-split",
-            "plugins/request-id"
+            "plugins/request-id",
+            "plugins/client-control"
           ]
         },
         {
@@ -152,6 +159,7 @@
             "discovery",
             "discovery/dns",
             "discovery/consul_kv",
+            "discovery/nacos",
             "discovery/eureka"
           ]
         },
@@ -181,7 +189,11 @@
         },
         {
           "type": "doc",
-          "id": "https"
+          "id": "certificate"
+        },
+        {
+          "type": "doc",
+          "id": "batch-processor"
         },
         {
           "type": "doc",
@@ -192,13 +204,44 @@
           "id": "install-dependencies"
         },
         {
+          "type": "doc",
+          "id": "plugin-develop"
+        },
+        {
+          "type": "doc",
+          "id": "external-plugin"
+        },
+        {
+          "type": "doc",
+          "id": "plugin-interceptors"
+        },
+        {
           "type": "link",
           "label": "CODE_STYLE",
           "href": "https://github.com/apache/apisix/blob/master/CODE_STYLE.md"
         },
         {
           "type": "doc",
+          "id": "aws"
+        },
+        {
+          "type": "doc",
+          "id": "mtls"
+        },
+        {
+          "type": "doc",
           "id": "debug-function"
+        },
+        {
+          "type": "category",
+          "label": "internal",
+          "items": [
+            "internal/testing-framework"
+          ]
+        },
+        {
+          "type": "doc",
+          "id": "profile"
         }
       ]
     },

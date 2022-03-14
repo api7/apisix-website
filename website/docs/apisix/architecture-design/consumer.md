@@ -23,7 +23,7 @@ title: Consumer
 
 For the API gateway, it is usually possible to identify a certain type of requester by using a domain name such as a request domain name, a client IP address, etc., and then perform plugin filtering and forward the request to the specified upstream, but sometimes the depth is insufficient.
 
-![consumer-who](../../../static/assets/images/consumer-who.png)
+![consumer-who](https://raw.githubusercontent.com/apache/apisix/master/docs/assets/images/consumer-who.png)
 
 As shown in the image above, as an API gateway, you should know who the API Consumer is, so you can configure different rules for different API Consumers.
 
@@ -34,7 +34,7 @@ As shown in the image above, as an API gateway, you should know who the API Cons
 
 In APISIX, the process of identifying a Consumer is as follows:
 
-![consumer-internal](../../../static/assets/images/consumer-internal.png)
+![consumer-internal](https://raw.githubusercontent.com/apache/apisix/master/docs/assets/images/consumer-internal.png)
 
 1. Authorization certification: e.g [key-auth](../plugins/key-auth.md), [JWT](../plugins/jwt-auth.md), etc.
 2. Get consumer_name: By authorization, you can naturally get the corresponding Consumer `id`, which is the unique identifier of the Consumer object.

@@ -81,11 +81,11 @@ curl http://127.0.0.1:9080/apisix/admin/consumers  -H 'X-API-KEY: edd1c9f034335f
 }'
 ```
 
-You can visit the dashboard: `http://127.0.0.1:9080/apisix/dashboard/`, to complete the above operations through the web interface, first add a consumer:
-![](../../../static/assets/images/plugin/wolf-rbac-1.png)
+You also can complete the above operations through the web interface, first add a consumer:
+![](https://raw.githubusercontent.com/apache/apisix/master/docs/assets/images/plugin/wolf-rbac-1.png)
 
 Then add the wolf-rbac plugin to the consumer page:
-![](../../../static/assets/images/plugin/wolf-rbac-2.png)
+![](https://raw.githubusercontent.com/apache/apisix/master/docs/assets/images/plugin/wolf-rbac-2.png)
 
 Notes: The `appid` filled in above needs to already exist in the wolf system.
 

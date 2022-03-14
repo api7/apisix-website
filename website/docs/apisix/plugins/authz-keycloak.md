@@ -187,7 +187,7 @@ docker run -e KEYCLOAK_USER=admin -e KEYCLOAK_PASSWORD=123456 -p 8090:8080 sshni
 
 The following image shows how the policies are configures in the Keycloak server.
 
-![Keycloak policy design](../../../static/assets/images/plugin/authz-keycloak.png)
+![Keycloak policy design](https://raw.githubusercontent.com/apache/apisix/master/docs/assets/images/plugin/authz-keycloak.png)
 
 ## Future Development
 

@@ -37,18 +37,18 @@ and the response size was 1KB.
 
 The x-axis means the size of CPU core, and the y-axis is QPS.
 
-![benchmark-1](../../static/assets/images/benchmark-1.jpg)
+![benchmark-1](https://raw.githubusercontent.com/apache/apisix/master/docs/assets/images/benchmark-1.jpg)
 
 #### Latency
 
 Note the y-axis latency in **microsecond(μs)** not millisecond.
 
-![latency-1](../../static/assets/images/latency-1.jpg)
+![latency-1](https://raw.githubusercontent.com/apache/apisix/master/docs/assets/images/latency-1.jpg)
 
 #### Flame Graph
 
 The result of Flame Graph:
-![flamegraph-1](../../static/assets/images/flamegraph-1.jpg)
+![flamegraph-1](https://raw.githubusercontent.com/apache/apisix/master/docs/assets/images/flamegraph-1.jpg)
 
 And if you want to run the benchmark test in your machine, you should run another Nginx to listen 80 port.
 
@@ -82,18 +82,18 @@ and the response size was 1KB.
 
 The x-axis means the size of CPU core, and the y-axis is QPS.
 
-![benchmark-2](../../static/assets/images/benchmark-2.jpg)
+![benchmark-2](https://raw.githubusercontent.com/apache/apisix/master/docs/assets/images/benchmark-2.jpg)
 
 #### Latency
 
 Note the y-axis latency in **microsecond(μs)** not millisecond.
 
-![latency-2](../../static/assets/images/latency-2.jpg)
+![latency-2](https://raw.githubusercontent.com/apache/apisix/master/docs/assets/images/latency-2.jpg)
 
 #### Flame Graph
 
 The result of Flame Graph:
-![flamegraph-2](../../static/assets/images/flamegraph-2.jpg)
+![flamegraph-2](https://raw.githubusercontent.com/apache/apisix/master/docs/assets/images/flamegraph-2.jpg)
 
 And if you want to run the benchmark test in your machine, you should run another Nginx to listen 80 port.
 

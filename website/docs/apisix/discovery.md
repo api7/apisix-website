@@ -25,7 +25,7 @@ title: Integration service discovery registry
 
 When system traffic changes, the number of servers of the upstream service also increases or decreases, or the server needs to be replaced due to its hardware failure. If the gateway maintains upstream service information through configuration, the maintenance costs in the microservices architecture pattern are unpredictable. Furthermore, due to the untimely update of these information, will also bring a certain impact for the business, and the impact of human error operation can not be ignored. So it is very necessary for the gateway to automatically get the latest list of service instances through the service registry。As shown in the figure below：
 
-![](../../static/assets/images/discovery.png)
+![](https://raw.githubusercontent.com/apache/apisix/master/docs/assets/images/discovery.png)
 
 1. When the service starts, it will report some of its information, such as the service name, IP, port and other information to the registry. The services communicate with the registry using a mechanism such as a heartbeat, and if the registry and the service are unable to communicate for a long time, the instance will be cancel.When the service goes offline, the registry will delete the instance information.
 2. The gateway gets service instance information from the registry in near-real time.
@@ -35,11 +35,13 @@ Common registries: Eureka, Etcd, Consul, Zookeeper, Nacos etc.
 
 ## Supported discovery registries
 
-Currently we support Eureka/Consul and service discovery via DNS.
+Currently we support Eureka/Consul/Nacos and service discovery via DNS.
 
 For service discovery via DNS, see [service discovery via DNS](discovery/dns.md).
 
 For Consul, see [service discovery via Consul](discovery/consul_kv.md)
+
+For Nacos, see [service discovery via Nacos](discovery/nacos.md)
 
 For Eureka, see below.
 
@@ -147,7 +149,7 @@ The result of this example is as follows:
     "port" : 8761,
     "weight" : 100,
     "metadata" : {
-      "management.port": "8761",
+      "management.port": "8761"
     }
   }
 ]
@@ -221,9 +223,9 @@ $ curl http://127.0.0.1:9080/apisix/admin/routes/1 -H 'X-API-KEY: edd1c9f034335f
     "uri": "/a/*",
     "plugins": {
         "proxy-rewrite" : {
-            regex_uri: ["^/a/(.*)", "/${1}"]
+            "regex_uri": ["^/a/(.*)", "/${1}"]
         }
-    }
+    },
     "upstream": {
         "service_name": "A-SERVICE",
         "type": "roundrobin",
@@ -236,9 +238,9 @@ $ curl http://127.0.0.1:9080/apisix/admin/routes/2 -H 'X-API-KEY: edd1c9f034335f
     "uri": "/b/*",
     "plugins": {
         "proxy-rewrite" : {
-            regex_uri: ["^/b/(.*)", "/${1}"]
+            "regex_uri": ["^/b/(.*)", "/${1}"]
         }
-    }
+    },
     "upstream": {
         "service_name": "B-SERVICE",
         "type": "roundrobin",

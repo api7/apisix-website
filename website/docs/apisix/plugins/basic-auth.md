@@ -61,13 +61,13 @@ curl http://127.0.0.1:9080/apisix/admin/consumers -H 'X-API-KEY: edd1c9f034335f1
 }'
 ```
 
-you can visit Dashboard `http://127.0.0.1:9080/apisix/dashboard/` and add a Consumer through the web console:
+you also can add a Consumer through the web console:
 
-![auth-1](../../../static/assets/images/plugin/basic-auth-1.png)
+![auth-1](https://raw.githubusercontent.com/apache/apisix/master/docs/assets/images/plugin/basic-auth-1.png)
 
 then add basic-auth plugin in the Consumer page:
 
-![auth-2](../../../static/assets/images/plugin/basic-auth-2.png)
+![auth-2](https://raw.githubusercontent.com/apache/apisix/master/docs/assets/images/plugin/basic-auth-2.png)
 
 ### 2. add a Route or add a Service, and enable the `basic-auth` plugin
 
@@ -133,7 +133,7 @@ When you want to disable the `basic-auth` plugin, it is very simple,
   no need to restart the service, it will take effect immediately:
 
 ```shell
-$ curl http://127.0.0.1:2379/apisix/admin/routes/1 -X PUT -d value='
+$ curl http://127.0.0.1:9080/apisix/admin/routes/1 -X PUT -d '
 {
     "methods": ["GET"],
     "uri": "/hello",

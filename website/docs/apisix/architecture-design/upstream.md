@@ -23,7 +23,7 @@ title: Upstream
 
 Upstream is a virtual host abstraction that performs load balancing on a given set of service nodes according to configuration rules. Upstream address information can be directly configured to `Route` (or `Service`). When Upstream has duplicates, you need to use "reference" to avoid duplication.
 
-![upstream-example](../../../static/assets/images/upstream-example.png)
+![upstream-example](https://raw.githubusercontent.com/apache/apisix/master/docs/assets/images/upstream-example.png)
 
 As shown in the image above, by creating an Upstream object and referencing it by ID in `Route`, you can ensure that only the value of an object is maintained.
 

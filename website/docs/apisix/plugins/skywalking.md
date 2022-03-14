@@ -33,7 +33,7 @@ title: skywalking
 
 ## Name
 
-[**Skywalking**](https://github.com/apache/skywalking) is an OpenTracing plugin.\
+[**Skywalking**](https://github.com/apache/skywalking) uses its native Nginx LUA tracer to provide tracing, topology analysis, and metrics from service and URI perspective.
 The skywalking server can supports both http and grpc protocols. The APISIX client only support http protocols.
 
 ## Attributes
@@ -78,10 +78,9 @@ curl http://127.0.0.1:9080/apisix/admin/routes/1  -H 'X-API-KEY: edd1c9f034335f1
 }'
 ```
 
-You can open dashboard with a browser:`http://127.0.0.1:9080/apisix/dashboard/`，to complete the above operation through the web interface, first add a route:\
-![ ](../../../static/assets/images/plugin/skywalking-1.png)\
-Then add skywalking plugin:\
-![ ](../../../static/assets/images/plugin/skywalking-2.png)
+You also can complete the above operation through the web interface, first add a route, then add skywalking plugin:
+
+![ ](https://raw.githubusercontent.com/apache/apisix/master/docs/assets/images/plugin/skywalking-1.png)
 
 ## How to set endpoint
 
@@ -90,9 +89,9 @@ We can set the endpoint by specified the configuration in `conf/config.yaml`.
 | Name         | Type   | Default  | Description                                                          |
 | ------------ | ------ | -------- | -------------------------------------------------------------------- |
 | service_name | string | "APISIX" | service name for skywalking reporter                                 |
-|service_instance_name|string|"APISIX Instance Name" | service instance name for skywalking reporter |
-| endpoint_addr| string | "http://127.0.0.1:12800" | the http endpoint of Skywalking, for example: http://127.0.0.1:12800 |
-| report_interval| integer | use the value in the skywalking client library | the report interval, in seconds |
+| service_instance_name | string |"APISIX Instance Name" | service instance name for skywalking reporter，  set it to `$hostname` to get local hostname directly.|
+| endpoint_addr | string | "http://127.0.0.1:12800" | the http endpoint of Skywalking, for example: http://127.0.0.1:12800 |
+| report_interval | integer | use the value in the skywalking client library | the report interval, in seconds |
 
 Here is an example:
 
@@ -146,7 +145,7 @@ plugin_attr:
 
     2. Open the webUI of  skywalking:
         You can open dashboard with a browser: http://10.110.149.175:8080. It will be a successful install as follow:
-        ![ ](../../../static/assets/images/plugin/skywalking-3.png)
+        ![ ](https://raw.githubusercontent.com/apache/apisix/master/docs/assets/images/plugin/skywalking-3.png)
 
 3. Test:
 
@@ -166,9 +165,9 @@ plugin_attr:
         ```
 
         You can see the topology of all service\
-        ![ ](../../../static/assets/images/plugin/skywalking-4.png)\
+        ![ ](https://raw.githubusercontent.com/apache/apisix/master/docs/assets/images/plugin/skywalking-4.png)\
         You can also see the tracer of all service\
-        ![ ](../../../static/assets/images/plugin/skywalking-5.png)
+        ![ ](https://raw.githubusercontent.com/apache/apisix/master/docs/assets/images/plugin/skywalking-5.png)
 
 ## Disable Plugin
 
@@ -177,7 +176,7 @@ When you want to disable the skyWalking plugin on a route/service, it is very si
   no need to restart the service, it will take effect immediately:
 
 ```shell
-$ curl http://127.0.0.1:2379/v2/keys/apisix/routes/1  -H 'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1' -X PUT -d value='
+$ curl http://127.0.0.1:9080/apisix/admin/routes/1  -H 'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1' -X PUT -d '
 {
     "methods": ["GET"],
     "uris": [

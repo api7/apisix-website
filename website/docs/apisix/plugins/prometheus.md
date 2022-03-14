@@ -84,11 +84,11 @@ You can use [APISIX Dashboard](https://github.com/apache/apisix-dashboard) to co
 
 First, add a Route:
 
-![](../../../static/assets/images/plugin/prometheus-1.png)
+![](https://raw.githubusercontent.com/apache/apisix/master/docs/assets/images/plugin/prometheus-1.png)
 
 Then add prometheus plugin:
 
-![](../../../static/assets/images/plugin/prometheus-2.png)
+![](https://raw.githubusercontent.com/apache/apisix/master/docs/assets/images/plugin/prometheus-2.png)
 
 ## How to fetch the metric data
 
@@ -113,9 +113,9 @@ scrape_configs:
 
 And we can check the status at prometheus console:
 
-![](../../../static/assets/images/plugin/prometheus01.png)
+![](https://raw.githubusercontent.com/apache/apisix/master/docs/assets/images/plugin/prometheus01.png)
 
-![](../../../static/assets/images/plugin/prometheus02.png)
+![](https://raw.githubusercontent.com/apache/apisix/master/docs/assets/images/plugin/prometheus02.png)
 
 ## How to specify export uri
 
@@ -137,17 +137,17 @@ plugin_attr:
 
 Metrics exported by the plugin can be graphed in Grafana using a drop in dashboard.
 
-Downloads Grafana dashboard meta and imports it to Grafana。
+Downloads [Grafana dashboard meta](https://github.com/apache/apisix/blob/master/docs/assets/other/json/apisix-grafana-dashboard.json) and imports it to Grafana。
 
 Or you can goto [Grafana official](https://grafana.com/grafana/dashboards/11719) for `Grafana` meta data.
 
-![](../../../static/assets/images/plugin/grafana-1.png)
+![](https://raw.githubusercontent.com/apache/apisix/master/docs/assets/images/plugin/grafana-1.png)
 
-![](../../../static/assets/images/plugin/grafana-2.png)
+![](https://raw.githubusercontent.com/apache/apisix/master/docs/assets/images/plugin/grafana-2.png)
 
-![](../../../static/assets/images/plugin/grafana-3.png)
+![](https://raw.githubusercontent.com/apache/apisix/master/docs/assets/images/plugin/grafana-3.png)
 
-![](../../../static/assets/images/plugin/grafana-4.png)
+![](https://raw.githubusercontent.com/apache/apisix/master/docs/assets/images/plugin/grafana-4.png)
 
 ### Available metrics
 

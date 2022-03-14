@@ -23,11 +23,11 @@ title: APISIX
 
 ## Plugin Loading Process
 
-![flow-load-plugin](../../../static/assets/images/flow-load-plugin.png)
+![flow-load-plugin](https://raw.githubusercontent.com/apache/apisix/master/docs/assets/images/flow-load-plugin.png)
 
 ## Plugin Hierarchy Structure
 
-![flow-plugin-internal](../../../static/assets/images/flow-plugin-internal.png)
+![flow-plugin-internal](https://raw.githubusercontent.com/apache/apisix/master/docs/assets/images/flow-plugin-internal.png)
 
 ## Configure APISIX
 
