@@ -21,20 +21,7 @@ title: hmac-auth
 #
 -->
 
-## Summary
-
-- [Summary](#summary)
-- [Name](#name)
-- [Attributes](#attributes)
-- [How To Enable](#how-to-enable)
-- [Test Plugin](#test-plugin)
-  - [generate signature:](#generate-signature)
-  - [Use the generated signature to try the request](#use-the-generated-signature-to-try-the-request)
-- [Custom header key](#custom-header-key)
-- [Disable Plugin](#disable-plugin)
-- [Generate Signature Examples](#generate-signature-examples)
-
-## Name
+## Description
 
 `hmac-auth` is an authentication plugin that need to work with `consumer`. Add HMAC Authentication to a `service` or `route`.
 
@@ -76,10 +63,10 @@ curl http://127.0.0.1:9080/apisix/admin/consumers -H 'X-API-KEY: edd1c9f034335f1
 The default `keep_headers` is false and `encode_uri_params` is true.
 
 You can visit the dashboard to complete the above operations through the web interface, first add a consumer:
-![](https://raw.githubusercontent.com/apache/apisix/master/docs/assets/images/plugin/hmac-auth-1.png)
+![create a consumer](https://raw.githubusercontent.com/apache/apisix/release/2.13/docs/assets/images/plugin/hmac-auth-1.png)
 
 Then add the hmac-auth plugin to the consumer page:
-![](https://raw.githubusercontent.com/apache/apisix/master/docs/assets/images/plugin/hmac-auth-2.png)
+![enable hmac plugin](https://raw.githubusercontent.com/apache/apisix/release/2.13/docs/assets/images/plugin/hmac-auth-2.png)
 
 2. add a Route or add a Service, and enable the `hmac-auth` plugin
 
@@ -93,7 +80,7 @@ curl http://127.0.0.1:9080/apisix/admin/routes/1 -H 'X-API-KEY: edd1c9f034335f13
     "upstream": {
         "type": "roundrobin",
         "nodes": {
-            "39.97.63.215:80": 1
+            "127.0.0.1:1980": 1
         }
     }
 }'
@@ -330,7 +317,7 @@ $ curl http://127.0.0.1:9080/apisix/admin/routes/1 -H 'X-API-KEY: edd1c9f034335f
     "upstream": {
         "type": "roundrobin",
         "nodes": {
-            "39.97.63.215:80": 1
+            "127.0.0.1:1980": 1
         }
     }
 }'
@@ -343,10 +330,10 @@ Need to pay attention to the handling of newline characters in signature strings
 
 Example inputs:
 
-| Variable | Value                    |
-| -------- | ------------------------ |
-| secret   | this is secret key       |
-| message  | this is signature string |
+| Variable | Value                      |
+| -------- | -------------------------- |
+| secret   | the shared secret key here |
+| message  | this is signature string   |
 
 Example outputs:
 

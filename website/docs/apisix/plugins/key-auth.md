@@ -21,19 +21,11 @@ title: key-auth
 #
 -->
 
-## Summary
-
-- [**Name**](#name)
-- [**Attributes**](#attributes)
-- [**How To Enable**](#how-to-enable)
-- [**Test Plugin**](#test-plugin)
-- [**Disable Plugin**](#disable-plugin)
-
-## Name
+## Description
 
 `key-auth` is an authentication plugin, it should work with `consumer` together.
 
-Add Key Authentication (also sometimes referred to as an API key) to a Service or a Route. Consumers then add their key either in a querystring parameter or a header to authenticate their requests.
+Add Key Authentication (also sometimes referred to as an API key) to a Service or a Route. Consumers then add their key either in a query string parameter or a header to authenticate their requests.
 
 ## Attributes
 
@@ -48,7 +40,7 @@ For route side:
 | Name | Type   | Requirement | Default | Valid | Description                                                                  |
 | ---- | ------ | ----------- | ------- | ----- | ---------------------------------------------------------------------------- |
 | header  | string | optional    | apikey        |       | the header we get the key from |
-| query   | string | optional    | apikey        |       | the querystring we get the key from, which priority is lower than header |
+| query   | string | optional    | apikey        |       | the query string we get the key from, which priority is lower than `header` |
 
 ## How To Enable
 
@@ -69,10 +61,10 @@ curl http://127.0.0.1:9080/apisix/admin/consumers -H 'X-API-KEY: edd1c9f034335f1
 ```
 
 You also can complete the above operation through the web interface, first add a route:
-![](https://raw.githubusercontent.com/apache/apisix/master/docs/assets/images/plugin/key-auth-1.png)
+![create a consumer](https://raw.githubusercontent.com/apache/apisix/release/2.13/docs/assets/images/plugin/key-auth-1.png)
 
 Then add key-auth plugin:
-![](https://raw.githubusercontent.com/apache/apisix/master/docs/assets/images/plugin/key-auth-2.png)
+![enable key-auth plugin](https://raw.githubusercontent.com/apache/apisix/release/2.13/docs/assets/images/plugin/key-auth-2.png)
 
 2. creates a route or service object, and enable plugin `key-auth`.
 
@@ -88,7 +80,7 @@ curl http://127.0.0.1:9080/apisix/admin/routes/1 -H 'X-API-KEY: edd1c9f034335f13
     "upstream": {
         "type": "roundrobin",
         "nodes": {
-            "39.97.63.215:80": 1
+            "127.0.0.1:1980": 1
         }
     }
 }'
@@ -142,7 +134,7 @@ $ curl http://127.0.0.1:9080/apisix/admin/routes/1 -H 'X-API-KEY: edd1c9f034335f
     "upstream": {
         "type": "roundrobin",
         "nodes": {
-            "39.97.63.215:80": 1
+            "127.0.0.1:1980": 1
         }
     }
 }'

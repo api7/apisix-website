@@ -1,5 +1,5 @@
 ---
-title: Plugins
+title: ext-plugin-post-req
 ---
 
 <!--
@@ -21,19 +21,10 @@ title: Plugins
 #
 -->
 
-## Hot reload
+## 描述
 
-APISIX plugins are hot-loaded. No matter you add, delete or modify plugins, and **update codes of plugins in disk**, you don't need to restart the service.
+`ext-plugin-post-req` 插件的功能与 `ext-plugin-pre-req` 插件类似。
 
-If your APISIX node has the Admin API turned on, just send an HTTP request through admin API:
+唯一不同的是：它在内置 Lua 插件执行之后且在请求到达上游之前工作。
 
-```shell
-curl http://127.0.0.1:9080/apisix/admin/plugins/reload -H 'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1' -X PUT
-```
-
-Note: if you disable a plugin which has been configured as part of your rule (in the `plugins` field of `route`, etc.),
-the its execution will be skipped.
-
-### Hot reload in stand-alone mode
-
-For stand-alone mode, see plugin related section in [stand alone mode](stand-alone.md).
+参考文档 [ext-plugin-pre-req](./ext-plugin-pre-req.md) 去学习如何配置并使用它。

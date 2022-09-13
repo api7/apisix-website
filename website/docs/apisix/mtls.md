@@ -66,7 +66,7 @@ curl --cacert /data/certs/mtls_ca.crt --key /data/certs/mtls_client.key --cert /
 
 ### How to configure
 
-You need to [build APISIX-Openresty](./how-to-build.md#step-6-build-openresty-for-apache-apisix) and configure `etcd.tls` section if you want APISIX to work on an etcd cluster with mTLS enabled.
+You need to [build APISIX-OpenResty](./how-to-build.md#step-6-build-openresty-for-apache-apisix) and configure `etcd.tls` section if you want APISIX to work on an etcd cluster with mTLS enabled.
 
 ```yaml
 etcd:
@@ -103,7 +103,7 @@ import sys
 # sudo pip install requests
 import requests
 
-if len(sys.argv) <= 4:
+if len(sys.argv) < 4:
     print("bad argument")
     sys.exit(1)
 with open(sys.argv[1]) as f:
@@ -166,7 +166,7 @@ import sys
 # sudo pip install requests
 import requests
 
-if len(sys.argv) <= 4:
+if len(sys.argv) < 4:
     print("bad argument")
     sys.exit(1)
 with open(sys.argv[2]) as f:

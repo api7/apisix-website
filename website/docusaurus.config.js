@@ -40,18 +40,26 @@ module.exports = {
     [
       "@docusaurus/preset-classic",
       {
-        docs: {
-          id: "docs-apisix",
-          path: "docs/apisix",
-          routeBasePath: "/",
-          sidebarPath: require.resolve("./docs/apisix/sidebars.json"),
-        },
+        docs: false,
         blog: {
           path: "blog",
         },
         theme: {
           customCss: "../src/css/customTheme.css",
         },
+      },
+    ],
+  ],
+  plugins: [
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'docs-apisix',
+        path: 'docs/apisix',
+        showLastUpdateAuthor: true,
+        showLastUpdateTime: true,
+        routeBasePath: '/',
+        sidebarPath: require.resolve('./docs/apisix/sidebars.json'),
       },
     ],
   ],

@@ -21,17 +21,6 @@ title: batch-requests
 #
 -->
 
-## Summary
-
-- [**Description**](#description)
-- [**Attributes**](#attributes)
-- [**How To Enable**](#how-to-enable)
-- [**How To Configure**](#how-to-configure)
-- [**Metadata**](#metadata)
-- [**Batch Api Request/Response**](#batch-api-requestresponse)
-- [**Test Plugin**](#test-plugin)
-- [**Disable Plugin**](#disable-plugin)
-
 ## Description
 
 `batch-requests` can accept multiple request and send them from `apisix` via [http pipeline](https://en.wikipedia.org/wiki/HTTP_pipelining), and return an aggregated response to client, which can significantly improve performance when the client needs to access multiple APIs.
@@ -47,7 +36,7 @@ None
 ## API
 
 This plugin will add `/apisix/batch-requests` as the endpoint.
-You may need to use [interceptors](../plugin-interceptors.md) to protect it.
+You may need to use [public-api](public-api.md) plugin to expose it.
 
 ## How To Enable
 
@@ -86,8 +75,8 @@ The plugin will create a API in `apisix` to handle your batch request.
 
 | Name     | Type                        | Requirement | Default | Valid | Description                           |
 | -------- | --------------------------- | ----------- | ------- | ----- | ------------------------------------- |
-| query    | object                      | optional    |         |       | Specify `QueryString` for all request |
-| headers  | object                      | optional    |         |       | Specify `Header` for all request      |
+| query    | object                      | optional    |         |       | Specify `query string` for all request |
+| headers  | object                      | optional    |         |       | Specify `header` for all request      |
 | timeout  | integer                     | optional    | 30000   |       | Aggregate API timeout in `ms`         |
 | pipeline | [HttpRequest](#httprequest) | required    |         |       | Request's detail                      |
 
@@ -97,8 +86,8 @@ The plugin will create a API in `apisix` to handle your batch request.
 | ---------- | ------- | ----------- | ------- | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
 | version    | string  | optional    | 1.1     | [1.0, 1.1]                                                                       | http version                                                                                            |
 | method     | string  | optional    | GET     | ["GET", "POST", "PUT", "DELETE", "PATCH", "HEAD", "OPTIONS", "CONNECT", "TRACE"] | http method                                                                                             |
-| query      | object  | optional    |         |                                                                                  | request's `QueryString`, if `Key` is conflicted with global `query`, this setting's value will be used. |
-| headers    | object  | optional    |         |                                                                                  | request's `Header`, if `Key` is conflicted with global `headers`, this setting's value will be used.    |
+| query      | object  | optional    |         |                                                                                  | request's `query string`, if `Key` is conflicted with global `query`, this setting's value will be used. |
+| headers    | object  | optional    |         |                                                                                  | request's `header`, if `Key` is conflicted with global `headers`, this setting's value will be used.    |
 | path       | string  | required    |         |                                                                                  | http request's path                                                                                     |
 | body       | string  | optional    |         |                                                                                  | http request's body                                                                                     |
 | ssl_verify | boolean | optional    | false   |                                                                                  | verify if SSL cert matches hostname.                                                                    |
@@ -118,23 +107,35 @@ Response is `Array` of [HttpResponse](#httpresponse).
 
 ## How to specify custom uri
 
-We can change the default uri in the `plugin_attr` section of `conf/config.yaml`.
+We have the [public-api](public-api.md) plugin, customizing the uri becomes even easier. We just need to set the `uri` you want when creating the route and change the configuration of the `public-api` plugin.
 
-| Name       | Type   | Requirement | Default                      | Description                       |
-| ---------- | ------ |-------------| ---------------------------- | --------------------------------- |
-| uri        | string | optional    | "/apisix/batch-requests"     | uri to use with batch-requests plugin   |
-
-Here is an example:
-
-```yaml
-plugin_attr:
-  batch-requests:
-    uri: "/api-gw/batch"
+```shell
+$ curl http://127.0.0.1:9080/apisix/admin/routes/br -H 'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1' -X PUT -d '
+{
+    "uri": "/batch-requests",
+    "plugins": {
+        "public-api": {
+            "uri": "/apisix/batch-requests"
+        }
+    }
+}'
 ```
 
 ## Test Plugin
 
-You can pass your request detail to batch API( `/apisix/batch-requests` ), `apisix` can automatically complete requests via [http pipeline](https://en.wikipedia.org/wiki/HTTP_pipelining). Such as:
+First you need to setup the route for the API that batch request, which will use the [public-api](public-api.md) plugin.
+
+```shell
+$ curl http://127.0.0.1:9080/apisix/admin/routes/br -H 'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1' -X PUT -d '
+{
+    "uri": "/apisix/batch-requests",
+    "plugins": {
+        "public-api": {}
+    }
+}'
+```
+
+Then, you can pass your request detail to batch API(`/apisix/batch-requests`), APISIX can automatically complete requests via [http pipeline](https://en.wikipedia.org/wiki/HTTP_pipelining). Such as:
 
 ```shell
 curl --location --request POST 'http://127.0.0.1:9080/apisix/batch-requests' \

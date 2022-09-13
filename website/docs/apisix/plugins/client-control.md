@@ -21,15 +21,7 @@ title: client-control
 #
 -->
 
-## Summary
-
-- [**Name**](#name)
-- [**Attributes**](#attributes)
-- [**How To Enable**](#how-to-enable)
-- [**Test Plugin**](#test-plugin)
-- [**Disable Plugin**](#disable-plugin)
-
-## Name
+## Description
 
 The `client-control` plugin dynamically controls the behavior of Nginx to
 handle the client request.
@@ -58,7 +50,7 @@ curl -i http://127.0.0.1:9080/apisix/admin/routes/1  -H 'X-API-KEY: edd1c9f03433
     "upstream": {
         "type": "roundrobin",
         "nodes": {
-            "39.97.63.215:80": 1
+            "127.0.0.1:1980": 1
         }
     }
 }'
@@ -95,7 +87,7 @@ curl http://127.0.0.1:9080/apisix/admin/routes/1  -H 'X-API-KEY: edd1c9f034335f1
     "upstream": {
         "type": "roundrobin",
         "nodes": {
-            "39.97.63.215:80": 1
+            "127.0.0.1:1980": 1
         }
     }
 }'

@@ -21,16 +21,7 @@ title: wolf-rbac
 #
 -->
 
-## Summary
-
-- [**Name**](#name)
-- [**Attributes**](#attributes)
-- [**Dependencies**](#dependencies)
-- [**How To Enable**](#how-to-enable)
-- [**Test Plugin**](#test-plugin)
-- [**Disable Plugin**](#disable-plugin)
-
-## Name
+## Description
 
 `wolf-rbac` is an authentication and authorization (rbac) plugin. It needs to work with `consumer`. Also need to add `wolf-rbac` to a `service` or `route`.
 The rbac feature is provided by [wolf](https://github.com/iGeeky/wolf). For more information about `wolf`, please refer to [wolf documentation](https://github.com/iGeeky/wolf).
@@ -39,7 +30,7 @@ The rbac feature is provided by [wolf](https://github.com/iGeeky/wolf). For more
 
 | Name          | Type   | Requirement | Default                  | Valid | Description                                               |
 | ------------- | ------ | ----------- | ------------------------ | ----- | --------------------------------------------------------- |
-| server        | string | optional    | "http://127.0.0.1:10080" |       | Set the service address of `wolf-server`.                 |
+| server        | string | optional    | "http://127.0.0.1:12180" |       | Set the service address of `wolf-server`.                 |
 | appid         | string | optional    | "unset"                  |       | Set the app id. The app id must be added in wolf-console. |
 | header_prefix | string | optional    | "X-"                     |       | prefix of custom HTTP header. After authentication is successful, three headers will be added to the request header (for backend) and response header (for frontend): `X-UserId`, `X-Username`, `X-Nickname`. |
 
@@ -51,7 +42,7 @@ This plugin will add several API:
 * /apisix/plugin/wolf-rbac/change_pwd
 * /apisix/plugin/wolf-rbac/user_info
 
-You may need to use [interceptors](../plugin-interceptors.md) to protect it.
+You may need to use [public-api](public-api.md) plugin to expose it.
 
 ## Dependencies
 
@@ -73,7 +64,7 @@ curl http://127.0.0.1:9080/apisix/admin/consumers  -H 'X-API-KEY: edd1c9f034335f
   "username":"wolf_rbac",
   "plugins":{
     "wolf-rbac":{
-      "server":"http://127.0.0.1:10080",
+      "server":"http://127.0.0.1:12180",
       "appid":"restful"
     }
   },
@@ -82,10 +73,10 @@ curl http://127.0.0.1:9080/apisix/admin/consumers  -H 'X-API-KEY: edd1c9f034335f
 ```
 
 You also can complete the above operations through the web interface, first add a consumer:
-![](https://raw.githubusercontent.com/apache/apisix/master/docs/assets/images/plugin/wolf-rbac-1.png)
+![add a consumer](https://raw.githubusercontent.com/apache/apisix/release/2.13/docs/assets/images/plugin/wolf-rbac-1.png)
 
 Then add the wolf-rbac plugin to the consumer page:
-![](https://raw.githubusercontent.com/apache/apisix/master/docs/assets/images/plugin/wolf-rbac-2.png)
+![enable wolf-rbac plugin](https://raw.githubusercontent.com/apache/apisix/release/2.13/docs/assets/images/plugin/wolf-rbac-2.png)
 
 Notes: The `appid` filled in above needs to already exist in the wolf system.
 
@@ -110,16 +101,33 @@ curl http://127.0.0.1:9080/apisix/admin/routes/1  -H 'X-API-KEY: edd1c9f034335f1
 
 ## Test Plugin
 
+#### Setup routes for public API
+
+Use the `public-api` plugin to expose the public API.
+
+```shell
+$ curl http://127.0.0.1:9080/apisix/admin/routes/wal -H 'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1' -X PUT -d '
+{
+    "uri": "/apisix/plugin/wolf-rbac/login",
+    "plugins": {
+        "public-api": {}
+    }
+}'
+```
+
+You also need to setup the `change_pwd` and `user_info` routes together.
+
 #### Login and get `wolf-rbac` token:
 
 The following `appid`, `username`, and `password` must be real ones in the wolf system.
+`authType` is the authentication type, `1` is password authentication, `2` is `LDAP` authentication. The default is `1`.  `wolf` supports `LDAP` authentication since version 0.5.0
 
 * Login as `POST application/json`
 
 ```shell
 curl http://127.0.0.1:9080/apisix/plugin/wolf-rbac/login -i \
 -H "Content-Type: application/json" \
--d '{"appid": "restful", "username":"test", "password":"user-password"}'
+-d '{"appid": "restful", "username":"test", "password":"user-password", "authType":1}'
 
 HTTP/1.1 200 OK
 Date: Wed, 24 Jul 2019 10:33:31 GMT

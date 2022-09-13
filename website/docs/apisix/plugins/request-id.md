@@ -21,15 +21,7 @@ title: request-id
 #
 -->
 
-## Summary
-
-- [**Name**](#name)
-- [**Attributes**](#attributes)
-- [**How To Enable**](#how-to-enable)
-- [**Test Plugin**](#test-plugin)
-- [**Disable Plugin**](#disable-plugin)
-
-## Name
+## Description
 
 `request-id` plugin adds a unique ID (UUID) to each request proxied through APISIX. This plugin can be used to track an
 API request. The plugin will not add a request id if the `header_name` is already present in the request.
@@ -105,7 +97,7 @@ plugin_attr:
 
 - `snowflake_epoc` default start time is  `2021-01-01T00:00:00Z`, and it can support `69 year` approximately to `2090-09-0715:47:35Z` according to the default configuration
 - `data_machine_bits` corresponds to the set of workIDs and datacEnteridd in the snowflake definition. The plug-in aslocates a unique ID to each process. Maximum number of supported processes is `pow(2, data_machine_bits)`. The default number of `12 bits` is up to `4096`.
-- `sequence_bits` defaults to `10 bits` and each process generates up to `1024` ID per second
+- `sequence_bits` defaults to `10 bits` and each process generates up to `1024` ID per millisecond.
 
 #### example
 
@@ -115,7 +107,7 @@ plugin_attr:
 
 > - Start time 2014-10-20 T15:00:00.000z, accurate to milliseconds. It can last about 69 years
 > - supports up to `1024` processes
-> - Up to `4096` ID per second per process
+> - Up to `4096` ID per millisecond per process
 
 ```yaml
 plugin_attr:

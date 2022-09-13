@@ -1,5 +1,5 @@
 {
-  "version": 2.5,
+  "version": "2.13.3",
   "sidebar": [
     {
       "type": "category",
@@ -35,14 +35,13 @@
           "label": "General",
           "items": [
             "plugins/batch-requests",
-            "plugins/serverless",
             "plugins/redirect",
             "plugins/echo",
             "plugins/gzip",
             "plugins/real-ip",
             "plugins/server-info",
-            "plugins/ext-plugin-pre-req",
-            "plugins/ext-plugin-post-req"
+            "plugins/ext-plugin-post-req",
+            "plugins/ext-plugin-pre-req"
           ]
         },
         {
@@ -52,21 +51,24 @@
             "plugins/response-rewrite",
             "plugins/proxy-rewrite",
             "plugins/grpc-transcode",
-            "plugins/fault-injection"
+            "plugins/grpc-web",
+            "plugins/fault-injection",
+            "plugins/mocking"
           ]
         },
         {
           "type": "category",
           "label": "Authentication",
           "items": [
+            "plugins/authz-keycloak",
+            "plugins/wolf-rbac",
             "plugins/key-auth",
             "plugins/jwt-auth",
             "plugins/basic-auth",
-            "plugins/authz-keycloak",
-            "plugins/wolf-rbac",
             "plugins/openid-connect",
             "plugins/hmac-auth",
-            "plugins/authz-casbin"
+            "plugins/authz-casbin",
+            "plugins/forward-auth"
           ]
         },
         {
@@ -78,7 +80,8 @@
             "plugins/ip-restriction",
             "plugins/ua-restriction",
             "plugins/referer-restriction",
-            "plugins/consumer-restriction"
+            "plugins/consumer-restriction",
+            "plugins/csrf"
           ]
         },
         {
@@ -94,36 +97,63 @@
             "plugins/api-breaker",
             "plugins/traffic-split",
             "plugins/request-id",
+            "plugins/proxy-control",
             "plugins/client-control"
           ]
         },
         {
           "type": "category",
-          "label": "Monitoring",
+          "label": "Observability",
           "items": [
-            "plugins/prometheus",
-            "plugins/zipkin",
-            "plugins/skywalking",
-            "plugins/node-status"
+            {
+              "type": "category",
+              "label": "Tracers",
+              "items": [
+                "plugins/zipkin",
+                "plugins/skywalking",
+                "plugins/opentelemetry"
+              ]
+            },
+            {
+              "type": "category",
+              "label": "Metrics",
+              "items": [
+                "plugins/prometheus",
+                "plugins/node-status"
+              ]
+            },
+            {
+              "type": "category",
+              "label": "Loggers",
+              "items": [
+                "plugins/http-logger",
+                "plugins/skywalking-logger",
+                "plugins/tcp-logger",
+                "plugins/kafka-logger",
+                "plugins/rocketmq-logger",
+                "plugins/udp-logger",
+                "plugins/clickhouse-logger",
+                "plugins/syslog",
+                "plugins/log-rotate",
+                "plugins/error-log-logger",
+                "plugins/sls-logger",
+                "plugins/google-cloud-logging",
+                "plugins/splunk-hec-logging",
+                "plugins/file-logger"
+              ]
+            }
           ]
         },
         {
           "type": "category",
-          "label": "Loggers",
+          "label": "Serverless",
           "items": [
-            "plugins/http-logger",
-            "plugins/tcp-logger",
-            "plugins/kafka-logger",
-            "plugins/udp-logger",
-            "plugins/syslog",
-            "plugins/log-rotate",
-            "plugins/error-log-logger",
-            "plugins/sls-logger"
+            "plugins/serverless"
           ]
         },
         {
           "type": "category",
-          "label": "Other Protocols",
+          "label": "其它",
           "items": [
             "plugins/dubbo-proxy",
             "plugins/mqtt-proxy"
@@ -159,10 +189,14 @@
           "items": [
             "discovery",
             "discovery/dns",
-            "discovery/consul_kv",
             "discovery/nacos",
-            "discovery/eureka"
+            "discovery/eureka",
+            "discovery/kubernetes"
           ]
+        },
+        {
+          "type": "doc",
+          "id": "external-plugin"
         },
         {
           "type": "doc",
@@ -210,20 +244,7 @@
         },
         {
           "type": "doc",
-          "id": "external-plugin"
-        },
-        {
-          "type": "doc",
-          "id": "plugin-interceptors"
-        },
-        {
-          "type": "link",
-          "label": "CODE_STYLE",
-          "href": "https://github.com/apache/apisix/blob/master/CODE_STYLE.md"
-        },
-        {
-          "type": "doc",
-          "id": "aws"
+          "id": "CODE_STYLE"
         },
         {
           "type": "doc",
@@ -234,22 +255,14 @@
           "id": "debug-function"
         },
         {
-          "type": "category",
-          "label": "internal",
-          "items": [
-            "internal/testing-framework"
-          ]
-        },
-        {
           "type": "doc",
           "id": "profile"
         }
       ]
     },
     {
-      "type": "link",
-      "label": "CHANGELOG",
-      "href": "https://github.com/apache/apisix/blob/master/CHANGELOG.md"
+      "type": "doc",
+      "id": "CHANGELOG"
     }
   ]
 }

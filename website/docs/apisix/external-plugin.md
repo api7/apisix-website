@@ -31,7 +31,7 @@ external plugins.
 
 ## How does it work
 
-![external-plugin](https://raw.githubusercontent.com/apache/apisix/master/docs/assets/images/external-plugin.png)
+![external-plugin](https://raw.githubusercontent.com/apache/apisix/release/2.13/docs/assets/images/external-plugin.png)
 
 When you configure a plugin runner in APISIX, APISIX will run the plugin runner
 as a subprocess. The process will belong to the same user of the APISIX
@@ -46,6 +46,10 @@ run external plugins and return the result back to APISIX.
 
 The target external plugins and the execution order are configured in the `ext-plugin-*`
 plugins. Like other plugins, they can be enabled and reconfigured on the fly.
+
+## How is it implemented
+
+If you are instested in the implementation of Plugin Runner, please refer to [The Implementation of Plugin Runner](./internal/plugin-runner.md).
 
 ## Supported plugin runners
 

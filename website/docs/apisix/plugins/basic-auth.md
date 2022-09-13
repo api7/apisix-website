@@ -21,15 +21,7 @@ title: basic-auth
 #
 -->
 
-## Summary
-
-- [**Name**](#name)
-- [**Attributes**](#attributes)
-- [**How To Enable**](#how-to-enable)
-- [**Test Plugin**](#test-plugin)
-- [**Disable Plugin**](#disable-plugin)
-
-## Name
+## Description
 
 `basic-auth` is an authentication plugin that need to work with `consumer`. Add Basic Authentication to a `service` or `route`.
 
@@ -39,10 +31,18 @@ For more information on Basic authentication, refer to [Wiki](https://en.wikiped
 
 ## Attributes
 
+For consumer side:
+
 | Name     | Type   | Requirement | Default | Valid | Description                                                                                                                                                      |
 | -------- | ------ | ----------- | ------- | ----- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | username | string | required    |         |       | Different `consumer` should have different value which is unique. When different `consumer` use a same `username`, a request matching exception would be raised. |
 | password | string | required    |         |       | the user's password                                                                                                                                              |
+
+For route side:
+
+| Name             | Type    | Requirement | Default | Valid | Description                                                                                                                                                      |
+| --------         | ------  | ----------- | ------- | ----- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| hide_credentials | boolean | optional    | false   |       | Whether to pass the Authorization request headers to the upstream.                                                                                            |
 
 ## How To Enable
 
@@ -63,11 +63,11 @@ curl http://127.0.0.1:9080/apisix/admin/consumers -H 'X-API-KEY: edd1c9f034335f1
 
 you also can add a Consumer through the web console:
 
-![auth-1](https://raw.githubusercontent.com/apache/apisix/master/docs/assets/images/plugin/basic-auth-1.png)
+![auth-1](https://raw.githubusercontent.com/apache/apisix/release/2.13/docs/assets/images/plugin/basic-auth-1.png)
 
 then add basic-auth plugin in the Consumer page:
 
-![auth-2](https://raw.githubusercontent.com/apache/apisix/master/docs/assets/images/plugin/basic-auth-2.png)
+![auth-2](https://raw.githubusercontent.com/apache/apisix/release/2.13/docs/assets/images/plugin/basic-auth-2.png)
 
 ### 2. add a Route or add a Service, and enable the `basic-auth` plugin
 
@@ -129,8 +129,8 @@ hello, world
 ## Disable Plugin
 
 When you want to disable the `basic-auth` plugin, it is very simple,
- you can delete the corresponding json configuration in the plugin configuration,
-  no need to restart the service, it will take effect immediately:
+you can delete the corresponding json configuration in the plugin configuration,
+no need to restart the service, it will take effect immediately:
 
 ```shell
 $ curl http://127.0.0.1:9080/apisix/admin/routes/1 -X PUT -d '

@@ -21,6 +21,8 @@ title: prometheus
 #
 -->
 
+## Description
+
 This plugin exposes metrics in Prometheus Exposition format.
 
 ## Attributes
@@ -46,16 +48,15 @@ plugin_attr:
 
 Assume environment variable `INTRANET_IP` is `172.1.1.1`, now APISIX will export the metrics via `172.1.1.1:9092`.
 
-**Before version `2.6`, the metrics are exposed via the data panel port,
-you may need to use [interceptors](../plugin-interceptors.md) to protect it.**
-
-If you still want this behavior, you can configure it like this:
+If you still want to expose the metrics via the data plane port (default: 9080), you can configure it like this:
 
 ```
 plugin_attr:
   prometheus:
     enable_export_server: false
 ```
+
+And expose it by using [public-api](public-api.md) plugin.
 
 ## How to enable it
 
@@ -84,11 +85,11 @@ You can use [APISIX Dashboard](https://github.com/apache/apisix-dashboard) to co
 
 First, add a Route:
 
-![](https://raw.githubusercontent.com/apache/apisix/master/docs/assets/images/plugin/prometheus-1.png)
+![create a route](https://raw.githubusercontent.com/apache/apisix/release/2.13/docs/assets/images/plugin/prometheus-1.png)
 
 Then add prometheus plugin:
 
-![](https://raw.githubusercontent.com/apache/apisix/master/docs/assets/images/plugin/prometheus-2.png)
+![enable prometheus plugin](https://raw.githubusercontent.com/apache/apisix/release/2.13/docs/assets/images/plugin/prometheus-2.png)
 
 ## How to fetch the metric data
 
@@ -106,6 +107,7 @@ For example like this:
 ```yaml
 scrape_configs:
   - job_name: 'apisix'
+    scrape_interval: 15s # This value will be related to the time range of the rate function in Prometheus QL. The time range in the rate function should be at least twice this value.
     metrics_path: '/apisix/prometheus/metrics'
     static_configs:
     - targets: ['127.0.0.1:9091']
@@ -113,9 +115,9 @@ scrape_configs:
 
 And we can check the status at prometheus console:
 
-![](https://raw.githubusercontent.com/apache/apisix/master/docs/assets/images/plugin/prometheus01.png)
+![checking status on prometheus dashboard](https://raw.githubusercontent.com/apache/apisix/release/2.13/docs/assets/images/plugin/prometheus01.png)
 
-![](https://raw.githubusercontent.com/apache/apisix/master/docs/assets/images/plugin/prometheus02.png)
+![prometheus apisix in-depth metric view](https://raw.githubusercontent.com/apache/apisix/release/2.13/docs/assets/images/plugin/prometheus02.png)
 
 ## How to specify export uri
 
@@ -141,13 +143,13 @@ Downloads [Grafana dashboard meta](https://github.com/apache/apisix/blob/master/
 
 Or you can goto [Grafana official](https://grafana.com/grafana/dashboards/11719) for `Grafana` meta data.
 
-![](https://raw.githubusercontent.com/apache/apisix/master/docs/assets/images/plugin/grafana-1.png)
+![Grafana chart-1](https://raw.githubusercontent.com/apache/apisix/release/2.13/docs/assets/images/plugin/grafana-1.png)
 
-![](https://raw.githubusercontent.com/apache/apisix/master/docs/assets/images/plugin/grafana-2.png)
+![Grafana chart-2](https://raw.githubusercontent.com/apache/apisix/release/2.13/docs/assets/images/plugin/grafana-2.png)
 
-![](https://raw.githubusercontent.com/apache/apisix/master/docs/assets/images/plugin/grafana-3.png)
+![Grafana chart-3](https://raw.githubusercontent.com/apache/apisix/release/2.13/docs/assets/images/plugin/grafana-3.png)
 
-![](https://raw.githubusercontent.com/apache/apisix/master/docs/assets/images/plugin/grafana-4.png)
+![Grafana chart-4](https://raw.githubusercontent.com/apache/apisix/release/2.13/docs/assets/images/plugin/grafana-4.png)
 
 ### Available metrics
 
@@ -234,13 +236,15 @@ apisix_etcd_reachable 1
 apisix_http_status{code="200",route="1",matched_uri="/hello",matched_host="",service="",consumer="",node="127.0.0.1"} 4
 apisix_http_status{code="200",route="2",matched_uri="/world",matched_host="",service="",consumer="",node="127.0.0.1"} 4
 apisix_http_status{code="404",route="",matched_uri="",matched_host="",service="",consumer="",node=""} 1
+# HELP apisix_http_requests_total The total number of client requests
+# TYPE apisix_http_requests_total gauge
+apisix_http_requests_total 1191780
 # HELP apisix_nginx_http_current_connections Number of HTTP connections
 # TYPE apisix_nginx_http_current_connections gauge
 apisix_nginx_http_current_connections{state="accepted"} 11994
 apisix_nginx_http_current_connections{state="active"} 2
 apisix_nginx_http_current_connections{state="handled"} 11994
 apisix_nginx_http_current_connections{state="reading"} 0
-apisix_nginx_http_current_connections{state="total"} 1191780
 apisix_nginx_http_current_connections{state="waiting"} 1
 apisix_nginx_http_current_connections{state="writing"} 1
 # HELP apisix_nginx_metric_errors_total Number of nginx-lua-prometheus errors

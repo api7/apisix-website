@@ -21,25 +21,13 @@ title: dubbo-proxy
 #
 -->
 
-## Summary
-
-- [**Name**](#name)
-- [**Requirement**](#requirement)
-- [**Runtime Attributes**](#runtime-attributes)
-- [**Static Attributes**](#static-attributes)
-- [**How To Enable**](#how-to-enable)
-- [**Test Plugin**](#test-plugin)
-- [**Disable Plugin**](#disable-plugin)
-
-## Name
+## Description
 
 dubbo-proxy plugin allows you proxy HTTP request to [**dubbo**](http://dubbo.apache.org).
 
 ## Requirement
 
 If you are using OpenResty, you need to build it with dubbo support, see [how to build](../how-to-build.md#step-6-build-openresty-for-apache-apisix)
-
-To make http2dubbo work in APISIX, we enhance the dubbo module based on Tengine's `mod_dubbo`. The modifications are contributed back to Tengine, but they are not included in the latest release version (Tengine-2.3.2) yet. So Tengine itself is unsupported.
 
 ## Runtime Attributes
 
@@ -71,7 +59,7 @@ Then reload APISIX.
 Here's an example, enable the dubbo-proxy plugin on the specified route:
 
 ```shell
-curl http://127.0.0.1:9080/apisix/admin/upstream/1  -H 'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1' -X PUT -d '
+curl http://127.0.0.1:9080/apisix/admin/upstreams/1  -H 'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1' -X PUT -d '
 {
     "nodes": {
         "127.0.0.1:20880": 1

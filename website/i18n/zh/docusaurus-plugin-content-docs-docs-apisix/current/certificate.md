@@ -1,5 +1,5 @@
 ---
-title: HTTPS
+title: 证书
 ---
 
 <!--
@@ -21,17 +21,19 @@ title: HTTPS
 #
 -->
 
-`APISIX` supports to load multiple SSL certificates by TLS extension Server Name Indication (SNI).
+`APISIX` 支持通过 TLS 扩展 SNI 实现加载特定的 SSL 证书以实现对 https 的支持。
 
-### Single SNI
+SNI(Server Name Indication)是用来改善 SSL 和 TLS 的一项特性，它允许客户端在服务器端向其发送证书之前向服务器端发送请求的域名，服务器端根据客户端请求的域名选择合适的 SSL 证书发送给客户端。
 
-It is most common for an SSL certificate to contain only one domain. We can create an `ssl` object. Here is a simple case, creates a `ssl` object and `route` object.
+### 单一域名指定
 
-* `cert`: PEM-encoded public certificate of the SSL key pair.
-* `key`: PEM-encoded private key of the SSL key pair.
-* `snis`: Hostname(s) to associate with this certificate as SNIs. To set this attribute this certificate must have a valid private key associated with it.
+通常情况下一个 SSL 证书只包含一个静态域名，配置一个 `ssl` 参数对象，它包括 `cert`、`key`和`sni`三个属性，详细如下：
 
-We will use the Python script below to simplify the example:
+* `cert`: SSL 密钥对的公钥，pem 格式
+* `key`: SSL 密钥对的私钥，pem 格式
+* `snis`: SSL 证书所指定的一个或多个域名，注意在设置这个参数之前，你需要确保这个证书对应的私钥是有效的。
+
+为了简化示例，我们会使用下面的 Python 脚本:
 
 ```python
 #!/usr/bin/env python
@@ -62,10 +64,10 @@ print(resp.text)
 ```
 
 ```shell
-# create SSL object
+# 创建 SSL 对象
 ./ssl.py t.crt t.key test.com
 
-# create Router object
+# 创建 Router 对象
 curl http://127.0.0.1:9080/apisix/admin/routes/1 -H 'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1' -X PUT -i -d '
 {
     "uri": "/hello",
@@ -79,7 +81,7 @@ curl http://127.0.0.1:9080/apisix/admin/routes/1 -H 'X-API-KEY: edd1c9f034335f13
     }
 }'
 
-# make a test
+# 测试一下
 
 curl --resolve 'test.com:9443:127.0.0.1' https://test.com:9443/hello  -vvv
 * Added test.com:9443:127.0.0.1 to DNS cache
@@ -101,12 +103,12 @@ curl --resolve 'test.com:9443:127.0.0.1' https://test.com:9443/hello  -vvv
 > Accept: */*
 ```
 
-### wildcard SNI
+### 泛域名
 
-Sometimes, one SSL certificate may contain a wildcard domain like `*.test.com`,
-that means it can accept more than one domain, eg: `www.test.com` or `mail.test.com`.
+一个 SSL 证书的域名也可能包含泛域名，如 `*.test.com`，它代表所有以 `test.com` 结尾的域名都可以使用该证书。
+比如 `*.test.com`，可以匹配 `www.test.com`、`mail.test.com`。
 
-Here is an example, note that the value we pass as `sni` is `*.test.com`.
+看下面这个例子，请注意我们把 `*.test.com` 作为 sni 传递进来:
 
 ```shell
 ./ssl.py t.crt t.key '*.test.com'
@@ -124,7 +126,7 @@ curl http://127.0.0.1:9080/apisix/admin/routes/1 -H 'X-API-KEY: edd1c9f034335f13
     }
 }'
 
-# make a test
+# 测试一下
 
 curl --resolve 'www.test.com:9443:127.0.0.1' https://www.test.com:9443/hello  -vvv
 * Added test.com:9443:127.0.0.1 to DNS cache
@@ -146,10 +148,10 @@ curl --resolve 'www.test.com:9443:127.0.0.1' https://www.test.com:9443/hello  -v
 > Accept: */*
 ```
 
-### multiple domain
+### 多域名的情况
 
-If your SSL certificate may contain more than one domain, like `www.test.com`
-and `mail.test.com`, then you can add them into the `snis` array. For example:
+如果一个 SSL 证书包含多个独立域名，比如 `www.test.com` 和 `mail.test.com`，
+你可以把它们都放入 `snis` 数组中，就像这样：
 
 ```json
 {
@@ -157,17 +159,12 @@ and `mail.test.com`, then you can add them into the `snis` array. For example:
 }
 ```
 
-### multiple certificates for a single domain
+### 单域名多证书的情况
 
-If you want to configure multiple certificate for a single domain, for
-instance, supporting both the
-[ECC](https://en.wikipedia.org/wiki/Elliptic-curve_cryptography)
-and RSA key-exchange algorithm, then just configure the extra certificates (the
-first certificate and private key should be still put in `cert` and `key`) and
-private keys by `certs` and `keys`.
+如果你期望为一个域名配置多张证书，例如以此来同时支持使用 ECC 和 RSA
+的密钥交换算法，那么你可以将额外的证书和私钥（第一张证书和其私钥依然使用 `cert` 和 `key`）配置在 `certs` 和 `keys` 中。
 
-* `certs`: PEM-encoded certificate array.
-* `keys`: PEM-encoded private key array.
+* `certs`：PEM 格式的 SSL 证书列表
+* `keys`：PEM 格式的 SSL 证书私钥列表
 
-`APISIX` will pair certificate and private key with the same indice as a SSL key
-pair. So the length of `certs` and `keys` must be same.
+`APISIX` 会将相同下标的证书和私钥配对使用，因此 `certs` 和 `keys` 列表的长度必须一致。
